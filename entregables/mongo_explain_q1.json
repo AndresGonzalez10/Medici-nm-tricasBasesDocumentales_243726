@@ -1,0 +1,155 @@
+{
+  "explainVersion": "1",
+  "stages": [
+    {
+      "$cursor": {
+        "queryPlanner": {
+          "namespace": "benchmark.orders",
+          "parsedQuery": {},
+          "indexFilterSet": false,
+          "queryHash": "51018CFF",
+          "planCacheShapeHash": "51018CFF",
+          "planCacheKey": "7CF6F44B",
+          "optimizationTimeMillis": 0,
+          "optimizationTimeMicros": 870,
+          "cursorType": "regular",
+          "maxIndexedOrSolutionsReached": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "prunedSimilarIndexes": false,
+          "winningPlan": {
+            "isCached": false,
+            "stage": "PROJECTION_DEFAULT",
+            "transformBy": {
+              "customer.geo.country": 1,
+              "items": 1,
+              "_id": 0
+            },
+            "inputStage": {
+              "stage": "COLLSCAN",
+              "nss": "benchmark.orders",
+              "direction": "forward"
+            }
+          },
+          "rejectedPlans": []
+        }
+      }
+    },
+    {
+      "$unwind": {
+        "path": "$items"
+      }
+    },
+    {
+      "$match": {
+        "items.price": {
+          "$gt": 50
+        }
+      }
+    },
+    {
+      "$group": {
+        "_id": {
+          "country": "$customer.geo.country",
+          "category": "$items.category"
+        },
+        "total_revenue": {
+          "$sum": {
+            "$multiply": [
+              "$items.qty",
+              "$items.price"
+            ]
+          }
+        },
+        "avg_revenue": {
+          "$avg": {
+            "$multiply": [
+              "$items.qty",
+              "$items.price"
+            ]
+          }
+        },
+        "count": {
+          "$sum": {
+            "$const": 1
+          }
+        },
+        "$willBeMerged": false
+      }
+    },
+    {
+      "$sort": {
+        "sortKey": {
+          "total_revenue": -1
+        }
+      }
+    }
+  ],
+  "queryShapeHash": "D5D467CD5CFB2F933F51E14AC264EF33D36379534841694A2FBD1DE97609C6C0",
+  "serverInfo": {
+    "host": "668c12986df4",
+    "port": 27017,
+    "version": "9.0.4",
+    "gitVersion": "64ade602b836c9adeffba7fa038c887ffab56196"
+  },
+  "serverParameters": {
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "command": {
+    "aggregate": "orders",
+    "pipeline": [
+      {
+        "$unwind": "$items"
+      },
+      {
+        "$match": {
+          "items.price": {
+            "$gt": 50
+          }
+        }
+      },
+      {
+        "$group": {
+          "_id": {
+            "country": "$customer.geo.country",
+            "category": "$items.category"
+          },
+          "total_revenue": {
+            "$sum": {
+              "$multiply": [
+                "$items.qty",
+                "$items.price"
+              ]
+            }
+          },
+          "avg_revenue": {
+            "$avg": {
+              "$multiply": [
+                "$items.qty",
+                "$items.price"
+              ]
+            }
+          },
+          "count": {
+            "$sum": 1
+          }
+        }
+      },
+      {
+        "$sort": {
+          "total_revenue": -1
+        }
+      }
+    ],
+    "explain": true,
+    "lsid": {
+      "id": "b'L\\xda.\\x18\\xa4\\x06A\\xad\\x82\\xd0\\x88>\\x04\\xee\\xb95'"
+    },
+    "$db": "benchmark"
+  },
+  "ok": 1.0
+}

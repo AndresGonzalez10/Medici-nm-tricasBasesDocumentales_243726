@@ -1,0 +1,16 @@
+
+============================================================
+  engine=postgres | profile=severe | query=q2 | concurrency=1 | run=0
+  Midiendo por 20s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=32 | QPS=1.6 | P50=597.31ms | P95=677.0ms | P99=704.22ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv
+
+============================================================
+  engine=postgres | profile=severe | query=q2 | concurrency=1 | run=2
+  Midiendo por 80s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=127 | QPS=1.5875 | P50=590.23ms | P95=669.59ms | P99=675.87ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv

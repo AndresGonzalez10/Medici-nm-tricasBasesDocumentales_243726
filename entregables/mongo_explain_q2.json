@@ -1,0 +1,145 @@
+{
+  "explainVersion": "1",
+  "stages": [
+    {
+      "$cursor": {
+        "queryPlanner": {
+          "namespace": "benchmark.orders",
+          "parsedQuery": {
+            "$and": [
+              {
+                "payment.status": {
+                  "$eq": "completed"
+                }
+              },
+              {
+                "timestamp": {
+                  "$gte": "2026-01-01T00:00:00Z"
+                }
+              }
+            ]
+          },
+          "indexFilterSet": false,
+          "queryHash": "596A2FD6",
+          "planCacheShapeHash": "596A2FD6",
+          "planCacheKey": "07BF93DF",
+          "optimizationTimeMillis": 0,
+          "optimizationTimeMicros": 100,
+          "cursorType": "regular",
+          "maxIndexedOrSolutionsReached": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "prunedSimilarIndexes": false,
+          "winningPlan": {
+            "isCached": false,
+            "stage": "PROJECTION_DEFAULT",
+            "transformBy": {
+              "customer.id": 1,
+              "order_id": 1,
+              "payment.final_total": 1,
+              "_id": 0
+            },
+            "inputStage": {
+              "stage": "SORT",
+              "sortPattern": {
+                "payment.final_total": -1
+              },
+              "memLimit": 104857600,
+              "limitAmount": 1000,
+              "type": "simple",
+              "inputStage": {
+                "stage": "FETCH",
+                "filter": {
+                  "payment.status": {
+                    "$eq": "completed"
+                  }
+                },
+                "nss": "benchmark.orders",
+                "inputStage": {
+                  "stage": "IXSCAN",
+                  "nss": "benchmark.orders",
+                  "keyPattern": {
+                    "timestamp": 1
+                  },
+                  "indexName": "timestamp_1",
+                  "isMultiKey": false,
+                  "multiKeyPaths": {
+                    "timestamp": []
+                  },
+                  "isUnique": false,
+                  "isSparse": false,
+                  "isPartial": false,
+                  "indexVersion": 2,
+                  "direction": "forward",
+                  "indexBounds": {
+                    "timestamp": [
+                      "[\"2026-01-01T00:00:00Z\", {})"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "rejectedPlans": []
+        }
+      }
+    },
+    {
+      "$project": {
+        "order_id": true,
+        "customer_id": "$customer.id",
+        "final_total": "$payment.final_total",
+        "_id": false
+      }
+    }
+  ],
+  "queryShapeHash": "65E4FA803E44444AA792326FB145C0512718D3D3077573091A289ACA88E71235",
+  "serverInfo": {
+    "host": "668c12986df4",
+    "port": 27017,
+    "version": "9.0.4",
+    "gitVersion": "64ade602b836c9adeffba7fa038c887ffab56196"
+  },
+  "serverParameters": {
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "command": {
+    "aggregate": "orders",
+    "pipeline": [
+      {
+        "$match": {
+          "payment.status": "completed",
+          "timestamp": {
+            "$gte": "2026-01-01T00:00:00Z"
+          }
+        }
+      },
+      {
+        "$sort": {
+          "payment.final_total": -1
+        }
+      },
+      {
+        "$limit": 1000
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "order_id": 1,
+          "customer_id": "$customer.id",
+          "final_total": "$payment.final_total"
+        }
+      }
+    ],
+    "explain": true,
+    "lsid": {
+      "id": "b'L\\xda.\\x18\\xa4\\x06A\\xad\\x82\\xd0\\x88>\\x04\\xee\\xb95'"
+    },
+    "$db": "benchmark"
+  },
+  "ok": 1.0
+}

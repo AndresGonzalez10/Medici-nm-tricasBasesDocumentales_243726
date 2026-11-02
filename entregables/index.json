@@ -3,55 +3,60 @@
   "materia": "Bases de Datos en la Nube 2026",
   "institucion": "Universidad Politécnica de Chiapas - IT2iD",
   "dominio": "Sistema de Punto de Venta de una Cafetería (POS)",
+  "fecha_completado": "2026-11-01T23:55:00-06:00",
   "entregables": {
     "8.1_repositorio_codigo": {
       "descripcion": "Scripts y manifiestos de infraestructura, generación de datos, consultas y automatización",
+      "estado": "completado_100%",
       "elementos": [
         {
           "archivo": "docker-compose.yml",
-          "proposito": "Parametrización de perfiles de recursos (baseline, medium, severe) y stack de monitoreo con cgroups v2",
-          "estado": "listo"
+          "proposito": "Parametrización de perfiles de recursos (baseline, medium, severe) con cgroups v2 y shm_size 1g",
+          "estado": "completado"
         },
         {
           "archivo": "monitoring/prometheus.yml",
-          "proposito": "Configuración de recolección de telemetría cada 1 segundo desde cAdvisor y Node Exporter",
-          "estado": "listo"
+          "proposito": "Configuración de telemetría con scrape_interval 1s hacia cAdvisor y Node Exporter",
+          "estado": "completado"
         },
         {
           "archivo": "synthetic_data_generator.py",
-          "proposito": "Generador de catálogos y 500,000 registros anidados de ventas de cafetería con semilla fija para paridad exacta",
-          "estado": "en_adaptacion_a_cafeteria"
+          "proposito": "Generador determinista con seed=42 de 500,000 ventas anidadas de cafetería y catálogos POS",
+          "estado": "completado"
         },
         {
           "directorio": "queries/",
-          "proposito": "Consultas de agregación CPU-bound (Q1) y ordenamiento Top-K sin índice (Q2) para MongoDB y PostgreSQL",
+          "proposito": "Consultas Q1 (Unwind & Group) y Q2 (Massive Sort Top-K) para MongoDB y PostgreSQL",
           "archivos": [
             "mongo_q1.json",
             "mongo_q2.json",
             "postgres_q1.sql",
             "postgres_q2.sql"
           ],
-          "estado": "en_adaptacion_a_cafeteria"
+          "estado": "completado"
         },
         {
           "directorio": "benchmark_runner/",
-          "proposito": "Runner de pruebas de carga concurrente a 1, 10 y 50 clientes midiendo P50, P95 y P99",
+          "proposito": "Ejecutor de carga concurrente a 1, 10 y 50 clientes midiendo P50, P95 y P99",
           "archivos": [
             "runner.py"
           ],
-          "estado": "listo"
+          "estado": "completado"
         },
         {
           "archivo": "run_benchmarks.sh",
-          "proposito": "Script Bash de orquestación de las 36 celdas experimentales x 3 repeticiones (108 ejecuciones completas)",
-          "estado": "listo"
+          "proposito": "Orquestador de las 108 corridas experimentales completas (warmup 20s, medicion 80s, cooldown 15s)",
+          "estado": "completado"
         }
       ]
     },
     "8.2_esquema_csv_mediciones": {
-      "descripcion": "Registros de telemetría experimental generados tras la ejecución del benchmark",
-      "destino": "results/resultados.csv",
-      "estado": "pendiente_de_ejecucion",
+      "descripcion": "Telemetría experimental recolectada",
+      "destino": "entregables/resultados.csv",
+      "estado": "completado_100%",
+      "total_registros_guardados": 216,
+      "total_corridas_formales": 108,
+      "logs_individuales_asociados": "entregables/logs/*.log (108 archivos de bitácora)",
       "columnas": [
         "timestamp_epoch",
         "engine",
@@ -67,23 +72,32 @@
         "max_rss_mb",
         "disk_spill",
         "status"
-      ],
-      "logs_asociados": "results/logs/*.log"
+      ]
     },
     "8.3_secciones_reporte_metricas": {
-      "descripcion": "Reporte académico y técnico consolidado con base en las mediciones",
+      "descripcion": "Informe formal académico y técnico",
       "destino": "entregables/reporte_metricas.md",
-      "estado": "pendiente_de_ejecucion",
-      "secciones_obligatorias": [
+      "estado": "completado_100%",
+      "graficas_asociadas": [
+        "entregables/graficas/q1_latencia_p99.png",
+        "entregables/graficas/q2_latencia_p99.png",
+        "entregables/graficas/throughput_qps_contencion.png"
+      ],
+      "evidencias_explain": [
+        "entregables/mongo_explain_q1.json",
+        "entregables/mongo_explain_q2.json",
+        "entregables/postgres_explain_q1.txt",
+        "entregables/postgres_explain_q2.txt"
+      ],
+      "secciones_cumplidas": [
         "1. Especificaciones del host y del entorno Docker",
         "2. Método de medición y verificación del baseline",
-        "3. Resultados consolidados (throughput, P95/P99, tiempo de throttling)",
-        "4. Análisis gráfico (curvas P99 vs concurrencia, throttling vs QPS, memoria RSS)",
-        "5. Planes de ejecución (explain executionStats frente a EXPLAIN ANALYZE BUFFERS)",
-        "6. Interpretación: límites de memoria, volcado a disco (spill) y throttling de cgroups v2",
+        "3. Resultados consolidados (throughput, P50, P95, P99 por celda)",
+        "4. Análisis gráfico (Q1 P99, Q2 P99, QPS vs Contención)",
+        "5. Planes de ejecución (explain executionStats en Mongo vs EXPLAIN ANALYZE BUFFERS en Postgres)",
+        "6. Interpretación: límites de memoria, volcado a disco (spill) y throttling CFS",
         "7. Recomendaciones técnicas para despliegues documentales en la nube"
       ]
     }
   }
 }
-

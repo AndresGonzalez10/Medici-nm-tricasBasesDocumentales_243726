@@ -183,3 +183,46 @@ timestamp_epoch,engine,profile,query_id,concurrency,run_number,throughput_qps,la
 1793594826,mongo,severe,q2,50,0,2.5,365265.75,371317.86,371461.79,,,False,ok
 1793595210,mongo,severe,q2,50,2,0.625,377257.71,382637.88,382962.77,,,False,ok
 1793595594,mongo,severe,q2,50,0,2.5,363364.21,367639.0,367960.73,,,False,ok
+1793595950,mongo,severe,q2,50,3,0.625,350197.77,355013.13,355045.55,,,False,ok
+1793595991,postgres,severe,q1,1,0,0.15,6962.08,12998.37,12998.37,,,False,ok
+1793596073,postgres,severe,q1,1,1,0.1875,5404.28,6231.23,6231.23,,,False,ok
+1793596111,postgres,severe,q1,1,0,0.2,5885.82,6075.9,6075.9,,,False,ok
+1793596196,postgres,severe,q1,1,2,0.2,5155.78,6031.15,6031.15,,,False,ok
+1793596235,postgres,severe,q1,1,0,0.2,5691.02,6399.73,6399.73,,,False,ok
+1793596320,postgres,severe,q1,1,3,0.1875,5574.22,7355.75,7355.75,,,False,ok
+1793596440,postgres,severe,q1,10,0,0.5,102719.03,104275.63,104275.63,,,False,ok
+1793596500,postgres,severe,q1,10,1,0.0,0.0,0.0,0.0,,,False,"error: server closed the connection unexpectedly
+	This probably mea"
+1793596597,postgres,severe,q1,10,0,0.5,73063.0,81292.81,81292.81,,,False,ok
+1793596696,postgres,severe,q1,10,2,0.0125,69223.19,69223.19,69223.19,,,False,"error: server closed the connection unexpectedly
+	This probably mea"
+1793596791,postgres,severe,q1,10,0,0.5,72980.94,79269.57,79269.57,,,False,ok
+1793596831,postgres,severe,q1,10,3,0.0,0.0,0.0,0.0,,,False,"error: server closed the connection unexpectedly
+	This probably mea"
+1793596940,postgres,severe,q1,50,0,0.0,0.0,0.0,0.0,,,False,"error: server closed the connection unexpectedly
+	This probably mea"
+1793596940,postgres,severe,q1,50,1,0.0,0.0,0.0,0.0,,,False,"error: connection to server at ""localhost"" (::1), port 5432 failed:"
+1793597002,postgres,severe,q1,50,0,0.0,0.0,0.0,0.0,,,False,"error: server closed the connection unexpectedly
+	This probably mea"
+1793597003,postgres,severe,q1,50,2,0.0,0.0,0.0,0.0,,,False,"error: connection to server at ""localhost"" (::1), port 5432 failed:"
+1793597093,postgres,severe,q1,50,0,0.0,0.0,0.0,0.0,,,False,"error: server closed the connection unexpectedly
+	This probably mea"
+1793597094,postgres,severe,q1,50,3,0.0,0.0,0.0,0.0,,,False,"error: connection to server at ""localhost"" (::1), port 5432 failed:"
+1793597130,postgres,severe,q2,1,0,1.6,594.12,676.06,679.6,,,False,ok
+1793597210,postgres,severe,q2,1,1,1.575,591.84,675.86,704.92,,,False,ok
+1793597246,postgres,severe,q2,1,0,1.6,597.31,677.0,704.22,,,False,ok
+1793597327,postgres,severe,q2,1,2,1.5875,590.23,669.59,675.87,,,False,ok
+1793597363,postgres,severe,q2,1,0,1.6,590.18,657.9,670.58,,,False,ok
+1793597444,postgres,severe,q2,1,3,1.575,594.04,671.79,680.94,,,False,ok
+1793597484,postgres,severe,q2,10,0,1.55,5298.33,13602.64,13999.72,,,False,ok
+1793597569,postgres,severe,q2,10,1,1.3375,5900.47,13104.96,13598.79,,,False,ok
+1793597609,postgres,severe,q2,10,0,1.55,5405.16,13362.3,13803.27,,,False,ok
+1793597694,postgres,severe,q2,10,2,1.35,6199.74,12998.56,13192.54,,,False,ok
+1793597734,postgres,severe,q2,10,0,1.55,4903.81,12989.94,13193.69,,,False,ok
+1793597819,postgres,severe,q2,10,3,1.3375,4796.53,13203.26,13300.34,,,False,ok
+1793597877,postgres,severe,q2,50,0,2.7,39295.18,42019.75,42400.62,,,False,ok
+1793597976,postgres,severe,q2,50,1,1.425,43597.96,62093.62,65001.07,,,False,ok
+1793598037,postgres,severe,q2,50,0,2.7,41800.71,45504.13,45654.0,,,False,ok
+1793598140,postgres,severe,q2,50,2,1.425,46799.65,62494.39,63403.04,,,False,ok
+1793598200,postgres,severe,q2,50,0,2.7,41205.05,44303.36,44382.79,,,False,ok
+1793598299,postgres,severe,q2,50,3,1.425,42800.06,58299.59,63794.73,,,False,ok
