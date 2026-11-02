@@ -1,0 +1,32 @@
+
+============================================================
+  engine=postgres | profile=baseline | query=q2 | concurrency=1 | run=0
+  Midiendo por 20s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=0 | QPS=0.0 | P50=0.0ms | P95=0.0ms | P99=0.0ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv
+
+============================================================
+  engine=postgres | profile=baseline | query=q2 | concurrency=1 | run=2
+  Midiendo por 80s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=0 | QPS=0.0 | P50=0.0ms | P95=0.0ms | P99=0.0ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv
+
+============================================================
+  engine=postgres | profile=baseline | query=q2 | concurrency=1 | run=0
+  Midiendo por 20s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=104 | QPS=5.2 | P50=172.55ms | P95=184.13ms | P99=188.74ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv
+
+============================================================
+  engine=postgres | profile=baseline | query=q2 | concurrency=1 | run=2
+  Midiendo por 80s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=410 | QPS=5.125 | P50=172.14ms | P95=189.05ms | P99=202.73ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv

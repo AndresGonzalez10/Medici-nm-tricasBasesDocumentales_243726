@@ -1,0 +1,181 @@
+# Docker Compose — BDA en la Nube 2026
+# Perfiles: BASELINE (A) | MEDIUM (B) | SEVERE (C)
+# Uso:
+#   docker compose --profile baseline up -d
+#   docker compose --profile medium up -d
+#   docker compose --profile severe up -d
+
+x-mongo-base: &mongo-base
+  image: mongo:latest
+  restart: unless-stopped
+  environment:
+    MONGO_INITDB_DATABASE: benchmark
+  volumes:
+    - mongo_data:/data/db
+  networks:
+    - bench_net
+
+x-postgres-base: &postgres-base
+  image: postgres:latest
+  restart: unless-stopped
+  shm_size: 1g
+  environment:
+    POSTGRES_USER: bench
+    POSTGRES_PASSWORD: bench1234
+    POSTGRES_DB: benchmark
+  volumes:
+    - pg_data:/var/lib/postgresql
+  networks:
+    - bench_net
+
+services:
+
+  # ─────────────────────────────────────────
+  # PROFILE A — BASELINE (4 CPU / 4 GB)
+  # ─────────────────────────────────────────
+  mongo_baseline:
+    <<: *mongo-base
+    container_name: mongo_baseline
+    profiles: [baseline]
+    ports:
+      - "27017:27017"
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4096M
+    mem_swappiness: 0
+
+  postgres_baseline:
+    <<: *postgres-base
+    container_name: postgres_baseline
+    profiles: [baseline]
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4096M
+    mem_swappiness: 0
+
+  # ─────────────────────────────────────────
+  # PROFILE B — MEDIUM (2 CPU / 2 GB)
+  # ─────────────────────────────────────────
+  mongo_medium:
+    <<: *mongo-base
+    container_name: mongo_medium
+    profiles: [medium]
+    ports:
+      - "27017:27017"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+    mem_swappiness: 0
+
+  postgres_medium:
+    <<: *postgres-base
+    container_name: postgres_medium
+    profiles: [medium]
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+    mem_swappiness: 0
+
+  # ─────────────────────────────────────────
+  # PROFILE C — SEVERE (1 CPU / 1 GB)
+  # ─────────────────────────────────────────
+  mongo_severe:
+    <<: *mongo-base
+    container_name: mongo_severe
+    profiles: [severe]
+    ports:
+      - "27017:27017"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1024M
+    mem_swappiness: 0
+
+  postgres_severe:
+    <<: *postgres-base
+    container_name: postgres_severe
+    profiles: [severe]
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1024M
+    mem_swappiness: 0
+
+  # ─────────────────────────────────────────
+  # MONITOREO — Siempre activo (sin perfil)
+  # ─────────────────────────────────────────
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    privileged: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - bench_net
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+    networks:
+      - bench_net
+    restart: unless-stopped
+
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.rootfs=/rootfs"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+    networks:
+      - bench_net
+    restart: unless-stopped
+
+networks:
+  bench_net:
+    driver: bridge
+
+volumes:
+  mongo_data:
+  pg_data:
+  prometheus_data:
+

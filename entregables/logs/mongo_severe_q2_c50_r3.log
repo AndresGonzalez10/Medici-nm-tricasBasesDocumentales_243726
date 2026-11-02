@@ -1,0 +1,8 @@
+
+============================================================
+  engine=mongo | profile=severe | query=q2 | concurrency=50 | run=0
+  Midiendo por 20s con 50 cliente(s)...
+============================================================
+
+  [+] Completado | queries=50 | QPS=2.5 | P50=363364.21ms | P95=367639.0ms | P99=367960.73ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv

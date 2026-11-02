@@ -1,0 +1,16 @@
+
+============================================================
+  engine=mongo | profile=baseline | query=q1 | concurrency=1 | run=0
+  Midiendo por 20s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=13 | QPS=0.65 | P50=1580.53ms | P95=1649.57ms | P99=1649.57ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv
+
+============================================================
+  engine=mongo | profile=baseline | query=q1 | concurrency=1 | run=1
+  Midiendo por 80s con 1 cliente(s)...
+============================================================
+
+  [+] Completado | queries=52 | QPS=0.65 | P50=1553.72ms | P95=1650.58ms | P99=1714.97ms
+  [+] Resultado guardado en: C:\Users\USER\Documents\Tareas\Cuatri7\bda\unidad2\PuntoDeVentaDeCafeteria\entregables\resultados.csv

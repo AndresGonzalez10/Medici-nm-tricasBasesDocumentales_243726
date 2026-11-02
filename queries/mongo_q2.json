@@ -1,0 +1,19 @@
+[
+  {
+    "$match": {
+      "payment.status": "completed",
+      "timestamp": { "$gte": "2026-01-01T00:00:00Z" }
+    }
+  },
+  { "$sort": { "payment.final_total": -1 } },
+  { "$limit": 1000 },
+  {
+    "$project": {
+      "_id": 0,
+      "order_id": 1,
+      "customer_id": "$customer.id",
+      "final_total": "$payment.final_total"
+    }
+  }
+]
+

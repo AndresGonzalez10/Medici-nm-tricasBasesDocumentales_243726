@@ -1,0 +1,89 @@
+{
+  "proyecto": "Medición de Métricas en Bases Documentales: MongoDB vs PostgreSQL JSONB",
+  "materia": "Bases de Datos en la Nube 2026",
+  "institucion": "Universidad Politécnica de Chiapas - IT2iD",
+  "dominio": "Sistema de Punto de Venta de una Cafetería (POS)",
+  "entregables": {
+    "8.1_repositorio_codigo": {
+      "descripcion": "Scripts y manifiestos de infraestructura, generación de datos, consultas y automatización",
+      "elementos": [
+        {
+          "archivo": "docker-compose.yml",
+          "proposito": "Parametrización de perfiles de recursos (baseline, medium, severe) y stack de monitoreo con cgroups v2",
+          "estado": "listo"
+        },
+        {
+          "archivo": "monitoring/prometheus.yml",
+          "proposito": "Configuración de recolección de telemetría cada 1 segundo desde cAdvisor y Node Exporter",
+          "estado": "listo"
+        },
+        {
+          "archivo": "synthetic_data_generator.py",
+          "proposito": "Generador de catálogos y 500,000 registros anidados de ventas de cafetería con semilla fija para paridad exacta",
+          "estado": "en_adaptacion_a_cafeteria"
+        },
+        {
+          "directorio": "queries/",
+          "proposito": "Consultas de agregación CPU-bound (Q1) y ordenamiento Top-K sin índice (Q2) para MongoDB y PostgreSQL",
+          "archivos": [
+            "mongo_q1.json",
+            "mongo_q2.json",
+            "postgres_q1.sql",
+            "postgres_q2.sql"
+          ],
+          "estado": "en_adaptacion_a_cafeteria"
+        },
+        {
+          "directorio": "benchmark_runner/",
+          "proposito": "Runner de pruebas de carga concurrente a 1, 10 y 50 clientes midiendo P50, P95 y P99",
+          "archivos": [
+            "runner.py"
+          ],
+          "estado": "listo"
+        },
+        {
+          "archivo": "run_benchmarks.sh",
+          "proposito": "Script Bash de orquestación de las 36 celdas experimentales x 3 repeticiones (108 ejecuciones completas)",
+          "estado": "listo"
+        }
+      ]
+    },
+    "8.2_esquema_csv_mediciones": {
+      "descripcion": "Registros de telemetría experimental generados tras la ejecución del benchmark",
+      "destino": "results/resultados.csv",
+      "estado": "pendiente_de_ejecucion",
+      "columnas": [
+        "timestamp_epoch",
+        "engine",
+        "profile",
+        "query_id",
+        "concurrency",
+        "run_number",
+        "throughput_qps",
+        "latency_p50_ms",
+        "latency_p95_ms",
+        "latency_p99_ms",
+        "cpu_throttled_seconds",
+        "max_rss_mb",
+        "disk_spill",
+        "status"
+      ],
+      "logs_asociados": "results/logs/*.log"
+    },
+    "8.3_secciones_reporte_metricas": {
+      "descripcion": "Reporte académico y técnico consolidado con base en las mediciones",
+      "destino": "entregables/reporte_metricas.md",
+      "estado": "pendiente_de_ejecucion",
+      "secciones_obligatorias": [
+        "1. Especificaciones del host y del entorno Docker",
+        "2. Método de medición y verificación del baseline",
+        "3. Resultados consolidados (throughput, P95/P99, tiempo de throttling)",
+        "4. Análisis gráfico (curvas P99 vs concurrencia, throttling vs QPS, memoria RSS)",
+        "5. Planes de ejecución (explain executionStats frente a EXPLAIN ANALYZE BUFFERS)",
+        "6. Interpretación: límites de memoria, volcado a disco (spill) y throttling de cgroups v2",
+        "7. Recomendaciones técnicas para despliegues documentales en la nube"
+      ]
+    }
+  }
+}
+
